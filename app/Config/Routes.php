@@ -32,6 +32,7 @@ $routes->set404Override();
 $routes->get('/', 		'Home::index');
 $routes->get('/json', 	'Home::json');
 $routes->get('/xml', 	'Home::xml');
+$routes->get('/dbtest', 'Home::dbtest');
 
 $routes->get('/sample-benchmark', 'SampleBenchmark::index');
 
