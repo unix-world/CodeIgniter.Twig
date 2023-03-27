@@ -1,9 +1,9 @@
 {
     "name": "codeigniter4/framework",
     "type": "project",
-    "description": "The CodeIgniter framework v4",
-    "homepage": "https://codeigniter.com",
-    "license": "MIT",
+    "description": "CodeIgniter PHP framework 4.3.3 + Twig 3.5.0 + LaminasDB 2.17.0, version: 4.3.3.uxm:1",
+    "homepage": "https://github.com/unix-world/CodeIgniter.Twig",
+    "license": "BSD",
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-intl": "*",
@@ -11,15 +11,10 @@
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1",
-        "twig/twig": "^3.5"
+        "twig/twig": "^3.5",
+        "laminas/laminas-db": "^2.17"
     },
     "require-dev": {
-        "kint-php/kint": "^5.0.4",
-        "codeigniter/coding-standard": "^1.5",
-        "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "3.13.0",
-        "mikey179/vfsstream": "^1.6",
-        "nexusphp/cs-config": "^3.6",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0"
     },
@@ -60,8 +55,6 @@
         "test": "phpunit"
     },
     "support": {
-        "forum": "https://forum.codeigniter.com/",
-        "source": "https://github.com/codeigniter4/CodeIgniter4",
-        "slack": "https://codeigniterchat.slack.com"
+        "source": "https://github.com/unix-world/CodeIgniter.Twig",
     }
 }

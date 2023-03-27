@@ -15,7 +15,7 @@
 	}
 	html, body {
 		color: rgba(33, 37, 41, 1);
-		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+		font-family: arial, sans-serif;
 		font-size: 16px;
 		margin: 0;
 		padding: 0;
@@ -143,8 +143,9 @@
 		border-bottom: 1px solid rgba(242, 242, 242, 1);
 		border-top: 1px solid rgba(242, 242, 242, 1);
 	}
-	.further section h1 {
-		margin-bottom: 0;
+	.further section h2 {
+		margin: 0;
+		font-weight: normal;
 	}
 	footer {
 		background-color: rgba(221, 72, 20, .8);
@@ -221,8 +222,8 @@ const toggleMenu = () => {
 		</ul>
 	</div>
 	<div class="heroe">
-		<h1>Welcome to CodeIgniter {{ ci_version }} with Twig-TPL {{ twig_version }}</h1>
-		<h2>The small framework with powerful features</h2>
+		<h1>Welcome to <b>CodeIgniter {{ ci_version }}</b>.uxm:1</h1>
+		<h2>Templating Engine powered by: <b>Twig-TPL {{ twig_version }}</b></h2>
 	</div>
 </header>
 {% endblock %}
@@ -236,8 +237,8 @@ const toggleMenu = () => {
 	<p>The corresponding controller for this page can be found at:</p>
 	<pre><code>app/Controllers/Home.php</code></pre>
 </section>
-<div class="further" style="text-align:center;">
-	<section><h1><i>License: BSD</i></h1></section>
+<div class="further">
+	<section><h2>Extended DB Support: <b>Laminas DBAL</b></h2></section>
 </div>
 {% endblock %}
 
