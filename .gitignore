@@ -1,0 +1,5 @@
+!.gitignore
+.DS_Store
+writable/debugbar/debugbar*
+writable/logs/log*
+writable/cache/twig/*
