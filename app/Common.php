@@ -14,16 +14,8 @@
  * @see: https://codeigniter.com/user_guide/extending/common.html
  */
 
-//-- unixman: add Twig Support (disable default views, they are unsafe !)
-function view(): string {
-	throw new \Exception(__METHOD__.'() # Method is not supported in the Twig Views context. It was replaced by $this->twigView() at the controller level !');
-	return '';
-}
-//--
-function view_cell(): string {
-	throw new \Exception(__METHOD__.'() # Method is not supported in the Twig Views context. There is no replacement for this method because a Twig View can include sub-templates.');
-	return '';
-}
-// #unixman
+//-- unixman: added Twig Support
+// the view() and view_cell() are still available, but no recommended !
+//-- #unixman
 
 // #end

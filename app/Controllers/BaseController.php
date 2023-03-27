@@ -110,6 +110,11 @@ abstract class BaseController extends Controller
 	 */
     public function twigView(string $tpl, array $data) : string
     {
+		if(CI_DEBUG) { // register file to debugbar/views
+			$renderer = \CodeIgniter\Config\Services::renderer();
+			$renderer->setData($data, 'raw')->render($tpl.'.twig.htm', [], false);
+			$renderer = null;
+		}
         $template = $this->twig->load($tpl.'.twig.htm');
         return (string) $template->render((array)$data);
     }
