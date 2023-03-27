@@ -1,0 +1,29 @@
+{% extends "templates/template.twig.htm" %}
+
+{% block title %}Benchmark Test URL{% endblock %}
+
+{% block css %}
+<style {csp-style-nonce}>
+	* {
+		transition: background-color 300ms ease, color 300ms ease;
+	}
+	*:focus {
+		background-color: rgba(221, 72, 20, .2);
+		outline: none;
+	}
+	html, body {
+		font-family: arial, sans-serif;
+		font-size: 16px;
+		margin: 10px;
+		padding: 0;
+	}
+</style>
+{% endblock %}
+
+{% block main %}
+<h1>
+[ Benchmark Test URL {{ date_time }} ]
+<br>
+use this URL to run a benchmark of this PHP framework ...
+</h1>
+{% endblock %}
