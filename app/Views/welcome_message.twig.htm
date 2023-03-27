@@ -147,6 +147,12 @@
 		margin: 0;
 		font-weight: normal;
 	}
+	.further section code {
+		display: inline;
+		background: #DDEEFF;
+		color: #444444;
+		padding: 2px;
+	}
 	footer {
 		background-color: rgba(221, 72, 20, .8);
 		text-align: center;
@@ -222,7 +228,7 @@ const toggleMenu = () => {
 		</ul>
 	</div>
 	<div class="heroe">
-		<h1>Welcome to <b>CodeIgniter {{ ci_version }}</b>.uxm:1</h1>
+		<h1>Welcome to <b>CodeIgniter {{ ci_version }}</b>.uxm:2</h1>
 		<h2>Templating Engine powered by: <b>Twig-TPL {{ twig_version }}</b></h2>
 	</div>
 </header>
@@ -234,11 +240,20 @@ const toggleMenu = () => {
 	<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 	<p>If you would like to edit this page you will find it located at:</p>
 	<pre><code>app/Views/welcome_message.twig.htm</code></pre>
-	<p>The corresponding controller for this page can be found at:</p>
-	<pre><code>app/Controllers/Home.php</code></pre>
+	<p>The corresponding controller/route for this page is:</p>
+	<pre><code>$routes->get('/', 'Home::index');</code></pre>
 </section>
 <div class="further">
-	<section><h2>Extended DB Support: <b>Laminas DBAL</b></h2></section>
+	<section>
+		<h2>Sample <b>Routes</b> defined in: <code>app/Config/Routes.php</code></h2>
+		<ul>
+			<li>/ : <a href="{{ base_url }}/">Home (Welcome)</a> # <code>app/Controllers/Home.php @ Method: index()</code></li>
+			<li>/json : <a href="{{ base_url }}/json">Sample JSON</a> # <code>app/Controllers/Home.php @ Method: json()</code></li>
+			<li>/xml : <a href="{{ base_url }}/xml">Sample XML</a> # <code>app/Controllers/Home.php @ Method: xml()</code></li>
+			<li>/dbtest : <a href="{{ base_url }}/dbtest">Sample DB Test (SQlite3 Memory)</a> # <code>app/Controllers/Home.php @ Method: dbtest()</code></li>
+			<li>/sample-benchmark : <a href="{{ base_url }}/sample-benchmark">Sample Benchmark</a> # <code>app/Controllers/SampleBenchmark.php @ Method: index()</code></li>
+		</ul>
+	</section>
 </div>
 {% endblock %}
 

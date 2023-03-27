@@ -42,7 +42,7 @@ class Database extends Config
         'strictOn'    => false,
         'failover'    => [],
         'port'        => 3306,
-        'foreignKeys' => true,
+        'foreignKeys' => false,
         'busyTimeout' => 1000,
     ];
 

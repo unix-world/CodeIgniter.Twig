@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitec0421f9c92006e246929d79cab1aca1
+class ComposerStaticInitbdeaa92e3c3e067a07f651bcab4ca82e
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -21,11 +21,6 @@ class ComposerStaticInitec0421f9c92006e246929d79cab1aca1
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
         ),
-        'L' => 
-        array (
-            'Laminas\\Stdlib\\' => 15,
-            'Laminas\\Db\\' => 11,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -41,14 +36,6 @@ class ComposerStaticInitec0421f9c92006e246929d79cab1aca1
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Laminas\\Stdlib\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-stdlib/src',
-        ),
-        'Laminas\\Db\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-db/src',
-        ),
     );
 
     public static $classMap = array (
@@ -58,9 +45,9 @@ class ComposerStaticInitec0421f9c92006e246929d79cab1aca1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitec0421f9c92006e246929d79cab1aca1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitec0421f9c92006e246929d79cab1aca1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitec0421f9c92006e246929d79cab1aca1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitbdeaa92e3c3e067a07f651bcab4ca82e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitbdeaa92e3c3e067a07f651bcab4ca82e::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitbdeaa92e3c3e067a07f651bcab4ca82e::$classMap;
 
         }, null, ClassLoader::class);
     }

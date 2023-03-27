@@ -13,6 +13,7 @@ class Home extends BaseController {
 			'ci_environment' 	=> (string) \ENVIRONMENT,
 			'twig_version' 		=> (string) \Twig\Environment::VERSION,
 			'date_year' 		=> (string) date('Y'),
+			'base_url' 			=> (string) rtrim(\BASESEURL, '/'),
 		]);
 
 	}
@@ -25,6 +26,7 @@ class Home extends BaseController {
 			'ci_environment' 	=> (string) \ENVIRONMENT,
 			'twig_version' 		=> (string) \Twig\Environment::VERSION,
 			'date_year' 		=> (string) date('Y'),
+			'base_url' 			=> (string) \BASESEURL,
 		]);
 
 	}
@@ -37,6 +39,7 @@ class Home extends BaseController {
 			'ci_environment' 	=> (string) \ENVIRONMENT,
 			'twig_version' 		=> (string) \Twig\Environment::VERSION,
 			'date_year' 		=> (string) date('Y'),
+			'base_url' 			=> (string) \BASESEURL,
 		]);
 
 	}
@@ -106,6 +109,14 @@ class Home extends BaseController {
 		$sql = 'SELECT * FROM table_main_sample LIMIT 10 OFFSET 0';
 		$query = $db->query($sql);
 		$results = (array) $query->getResultArray();
+
+		$sql = 'DELETE FROM table_main_sample';
+		$query = $db->query($sql);
+		if(($query !== true) || ($db->affectedRows() !== 2)) {
+			$this->response->setStatusCode(500);
+			$this->response->setContentType('text/plain');
+			return 'ERR: Failed to Delete from Table - All Rows';
+		}
 
 		$this->response->setContentType('text/html');
 		return (string) '<pre>'.esc((string)\json_encode([
