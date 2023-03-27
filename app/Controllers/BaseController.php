@@ -1,5 +1,7 @@
 <?php
 
+// modified by unixman r.20230327
+
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
@@ -37,6 +39,10 @@ abstract class BaseController extends Controller
      */
     protected $helpers = [];
 
+    //-- unixman: add Twig Support
+    private $twig = null;
+    //-- #unixman
+
     /**
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
@@ -53,6 +59,39 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
 
+        //-- unixman: add Twig Support
+        $appPaths = new \Config\Paths();
+        $appViewPaths = (string) $appPaths->viewDirectory;
+        //--
+		$this->twig = new \Twig\Environment(
+			new \Twig\Loader\FilesystemLoader([ (string)$appViewPaths ]),
+			[
+				'charset' 			=> (string) 'UTF-8',
+				'autoescape' 		=> 'html', // default escaping strategy ; other escaping strategies: js
+				'optimizations' 	=> -1,
+				'strict_variables' 	=> false,
+				'debug' 			=> false,
+				'cache' 			=> (string) \WRITEPATH.'/cache/twig',
+				'auto_reload' 		=> true,
+			]
+		);
+        //-- #unixman
+
         // E.g.: $this->session = \Config\Services::session();
     }
+
+	//-- unixman: add Twig Support
+	/**
+	 * Usage: instead:
+	 * return view('welcome_message');
+	 * use:
+	 * return $this->twigView('welcome_message', [ 'var1' => 'val1' ]);
+	 */
+    public function twigView(string $tpl, array $data)
+    {
+        $template = $this->twig->load($tpl.'.twig.htm');
+        return $template->render((array)$data);
+    }
+    //-- #unixman
+
 }

@@ -1,5 +1,38 @@
 <?php
 
+//-- unixman: add support for dynamic URL detection
+function get_server_current_url() : string {
+	//--
+	$domain = (string) ($_SERVER['SERVER_NAME'] ?? 'localhost');
+	//--
+	$port = (int) ($_SERVER['SERVER_PORT'] ?? null);
+	if(((int)$port <= 0) OR ((int)$port > 65535) OR ((int)$port == 80) OR ((int)$port == 443)) {
+		$port = '';
+	} else {
+		$port = (string) ':'.$port;
+	} //end if
+	//--
+	$protocol = 'http:';
+	if(
+		(isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')
+		OR
+		(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
+	) {
+		$protocol = 'https:';
+	} //end if
+	//--
+	$path = (string) ($_SERVER['SCRIPT_NAME'] ?? '');
+	$path = (string) rtrim((string)dirname((string)$path), '/').'/';
+	//--
+	$url = $protocol.'//'.$domain.$port.$path;
+	//--
+	return (string) $url;
+	//--
+} //end function
+define('BASESEURL', (string)get_server_current_url());
+//die(BASESEURL);
+//-- #unixman
+
 // Check PHP version.
 $minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
