@@ -6,7 +6,7 @@ class SampleBenchmark extends BaseController {
 
 	public function index() {
 
-		return $this->twigView('sample_benchmark', [
+		return (string) $this->twigView('sample_benchmark', [
 			'date_time' => (string) \date('Y-m-d H:i:s O'),
 		]);
 

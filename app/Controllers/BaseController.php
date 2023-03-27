@@ -31,6 +31,27 @@ abstract class BaseController extends Controller
     protected $request;
 
     /**
+     * Instance of the main response object.
+     *
+     * @var ResponseInterface
+     */
+    protected $response;
+
+    /**
+     * Instance of logger to use.
+     *
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * Should enforce HTTPS access for all methods in this controller.
+     *
+     * @var int Number of seconds to set HSTS header
+     */
+    protected $forceHTTPS = 0;
+
+    /**
      * An array of helpers to be loaded automatically upon
      * class instantiation. These helpers will be available
      * to all other controllers that extend BaseController.
@@ -87,10 +108,10 @@ abstract class BaseController extends Controller
 	 * use:
 	 * return $this->twigView('welcome_message', [ 'var1' => 'val1' ]);
 	 */
-    public function twigView(string $tpl, array $data)
+    public function twigView(string $tpl, array $data) : string
     {
         $template = $this->twig->load($tpl.'.twig.htm');
-        return $template->render((array)$data);
+        return (string) $template->render((array)$data);
     }
     //-- #unixman
 
