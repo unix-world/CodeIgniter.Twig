@@ -1,5 +1,7 @@
 <?php
 
+// modified by unixman r.20230406
+
 namespace Config;
 
 // Create a new instance of our RouteCollection class.
@@ -33,8 +35,9 @@ $routes->get('/', 		'Home::index');
 $routes->get('/json', 	'Home::json');
 $routes->get('/xml', 	'Home::xml');
 $routes->get('/dbtest', 'Home::dbtest');
-
 $routes->get('/sample-benchmark', 'SampleBenchmark::index');
+
+//$routes->get('/sample', 'SomeController::someMethod', ['filter' => 'auth-provider:arg1,arg2']);
 
 /*
  * --------------------------------------------------------------------

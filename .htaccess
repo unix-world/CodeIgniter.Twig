@@ -1,0 +1,24 @@
+# added by unixman r.20230406
+
+RewriteEngine On
+
+order deny,allow
+deny from all
+allow from 127.0.0.1
+
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteRule ^\.htaccess$ - [F,L]
+RewriteRule ^\.env - [F,L]
+RewriteRule ^\env - [F,L]
+RewriteRule ^app/ - [F,L]
+RewriteRule ^system/ - [F,L]
+RewriteRule ^tests/ - [F,L]
+RewriteRule ^vendor/ - [F,L]
+RewriteRule ^writable/ - [F,L]
+
+RewriteRule ^$ public/ [L]
+RewriteRule (.*) public/$1 [L]
+
+# end

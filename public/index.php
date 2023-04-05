@@ -1,5 +1,7 @@
 <?php
 
+// modified by unixman r.20230406
+
 //-- unixman: add support for dynamic URL detection
 function get_server_current_url() : string {
 	//--
@@ -22,7 +24,11 @@ function get_server_current_url() : string {
 	} //end if
 	//--
 	$path = (string) ($_SERVER['SCRIPT_NAME'] ?? '');
-	$path = (string) rtrim((string)dirname((string)$path), '/').'/';
+	$dpath = (string) dirname((string)$path);
+	if((string)DIRECTORY_SEPARATOR == '\\') {
+		$dpath = (string) strtr((string)$dpath, [ '\\' => '/' ]);
+	} //end if
+	$path = (string) rtrim((string)$dpath, '/').'/';
 	//--
 	$url = $protocol.'//'.$domain.$port.$path;
 	//--
@@ -36,13 +42,13 @@ define('BASESEURL', (string)get_server_current_url());
 // Check PHP version.
 $minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
-    $message = sprintf(
-        'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
-        $minPhpVersion,
-        PHP_VERSION
-    );
+	$message = sprintf(
+		'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
+		$minPhpVersion,
+		PHP_VERSION
+	);
 
-    exit($message);
+	exit($message);
 }
 
 // Path to the front controller (this file)
@@ -98,3 +104,5 @@ $app->setContext($context);
  */
 
 $app->run();
+
+// #end

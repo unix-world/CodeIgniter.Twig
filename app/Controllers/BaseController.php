@@ -1,6 +1,6 @@
 <?php
 
-// modified by unixman r.20230327
+// modified by unixman r.20230406
 
 namespace App\Controllers;
 
@@ -21,69 +21,80 @@ use Psr\Log\LoggerInterface;
  *
  * For security be sure to declare any new methods as protected or private.
  */
-abstract class BaseController extends Controller
-{
-    /**
-     * Instance of the main Request object.
-     *
-     * @var CLIRequest|IncomingRequest
-     */
-    protected $request;
+abstract class BaseController extends Controller {
 
-    /**
-     * Instance of the main response object.
-     *
-     * @var ResponseInterface
-     */
-    protected $response;
+	/**
+	 * Instance of the main Request object.
+	 *
+	 * @var CLIRequest|IncomingRequest
+	 */
+	protected $request;
 
-    /**
-     * Instance of logger to use.
-     *
-     * @var LoggerInterface
-     */
-    protected $logger;
+	/**
+	 * Instance of the main response object.
+	 *
+	 * @var ResponseInterface
+	 */
+	protected $response;
 
-    /**
-     * Should enforce HTTPS access for all methods in this controller.
-     *
-     * @var int Number of seconds to set HSTS header
-     */
-    protected $forceHTTPS = 0;
+	/**
+	 * Instance of logger to use.
+	 *
+	 * @var LoggerInterface
+	 */
+	protected $logger;
 
-    /**
-     * An array of helpers to be loaded automatically upon
-     * class instantiation. These helpers will be available
-     * to all other controllers that extend BaseController.
-     *
-     * @var array
-     */
-    protected $helpers = [];
+	/**
+	 * Should enforce HTTPS access for all methods in this controller.
+	 *
+	 * @var int Number of seconds to set HSTS header
+	 */
+	protected $forceHTTPS = 0;
 
-    //-- unixman: add Twig Support
-    private $twig = null;
-    //-- #unixman
+	/**
+	 * An array of helpers to be loaded automatically upon
+	 * class instantiation. These helpers will be available
+	 * to all other controllers that extend BaseController.
+	 *
+	 * @var array
+	 */
+	protected $helpers = [];
 
-    /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
-     */
-    // protected $session;
+	//-- unixman: add Twig Support
+	private $twig = null;
+	//-- #unixman
 
-    /**
-     * Constructor.
-     */
-    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-    {
-        // Do Not Edit This Line
-        parent::initController($request, $response, $logger);
+	/**
+	 * Be sure to declare properties for any property fetch you initialized.
+	 * The creation of dynamic property is deprecated in PHP 8.2.
+	 */
+	// protected $session;
 
-        // Preload any models, libraries, etc, here.
+	/**
+	 * Constructor.
+	 */
+	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger) {
+		// Do Not Edit This Line
+		parent::initController($request, $response, $logger);
 
-        //-- unixman: add Twig Support
-        $appPaths = new \Config\Paths();
-        $appViewPaths = (string) $appPaths->viewDirectory;
-        //--
+		// Preload any models, libraries, etc, here.
+
+		//-- unixman: add Twig Support
+		$cachePath = (string)\WRITEPATH.\DIRECTORY_SEPARATOR.'cache';
+		if(!\is_dir((string)$cachePath)) { // it must exists otherwise realpath below will return root directory !!
+			throw new \Exception('Cache Path is missing ...');
+			return;
+		}
+		$appPaths = new \Config\Paths();
+		$appViewPaths = (string) \realpath((string)$appPaths->viewDirectory);
+		$cachePath    = (string) \realpath((string)$cachePath);
+		if((string)\DIRECTORY_SEPARATOR == '\\') {
+			$appViewPaths = (string) \strtr((string)$appViewPaths, [ '\\' => '/' ]);
+			$cachePath    = (string) \strtr((string)$cachePath,    [ '\\' => '/' ]);
+		} //end if
+		$appViewPaths = (string) \rtrim((string)$appViewPaths, '/').'/';
+		$cachePath    = (string) \rtrim((string)$cachePath,    '/').'/';
+		//--
 		$this->twig = new \Twig\Environment(
 			new \Twig\Loader\FilesystemLoader([ (string)$appViewPaths ]),
 			[
@@ -92,14 +103,14 @@ abstract class BaseController extends Controller
 				'optimizations' 	=> -1,
 				'strict_variables' 	=> false,
 				'debug' 			=> false,
-				'cache' 			=> (string) \WRITEPATH.'/cache/twig',
+				'cache' 			=> (string) $cachePath.'twig',
 				'auto_reload' 		=> true,
 			]
 		);
-        //-- #unixman
+		//-- #unixman
 
-        // E.g.: $this->session = \Config\Services::session();
-    }
+		// E.g.: $this->session = \Config\Services::session();
+	}
 
 	//-- unixman: add Twig Support
 	/**
@@ -108,16 +119,21 @@ abstract class BaseController extends Controller
 	 * use:
 	 * return $this->twigView('welcome_message', [ 'var1' => 'val1' ]);
 	 */
-    public function twigView(string $tpl, array $data) : string
-    {
+	public function twigView(string $tpl, array $data) : string {
+		$tpl .= '.twig.htm';
+
 		if(CI_DEBUG) { // register file to debugbar/views
 			$renderer = \CodeIgniter\Config\Services::renderer();
-			$renderer->setData($data, 'raw')->render($tpl.'.twig.htm', [], false);
+			$renderer->setData($data, 'raw')->render((string)$tpl, [], false);
 			$renderer = null;
 		}
-        $template = $this->twig->load($tpl.'.twig.htm');
-        return (string) $template->render((array)$data);
-    }
-    //-- #unixman
+
+		$template = $this->twig->load((string)$tpl);
+
+		return (string) $template->render((array)$data);
+	}
+	//-- #unixman
 
 }
+
+// #end
